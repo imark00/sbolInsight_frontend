@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import { Drawer, Box, IconButton } from "@mui/material";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
+import { Box } from "@mui/material";
 import axios from "axios";
 import './App.css';
 import { quantum } from 'ldrs'
 import FileUpload from './components/fileUpload';
 import ValidationMessages from './components/validation';
 import GraphView from './components/graph';
-
-
-const drawerWidth = "60px"
+import SideMenu from './components/sideMenu';
 
 quantum.register()
 
@@ -26,12 +22,9 @@ const SBOLInsightPage = () => {
 
     const [openUploadModal, setOpenUploadModal] = useState(false);
 
-
-    //const [open, setOpen] = useState(false);
     const openUploadFileModal = () => setOpenUploadModal(true);
     const closeUploadFileModal = () => setOpenUploadModal(false);
 
-    // const [uploadProgress, setUploadProgress] = useState(0);
 
     const [graphElements, setGraphElements] = useState(null);
     const [graphError, setGraphError] = useState(false);
@@ -100,10 +93,6 @@ const SBOLInsightPage = () => {
     }
 
 
-    function showValiationModal() {
-        openVModal ? closeValidationModal() : openValidationModal()
-    }
-
     const handleFileUpload = async (files) => {
         const file = files[0];
         closeUploadFileModal();
@@ -119,42 +108,11 @@ const SBOLInsightPage = () => {
         <Box
             sx={{ display: 'flex' }}
         >
-            {/* Drawer */}
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                        padding: '5px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                    },
-                }}
-                variant="permanent"
-                anchor="left"
-            >
-                <IconButton
-                    onClick={openUploadFileModal}
-                >
-                    <UploadFileIcon sx={{
-                        color: "black"
-                    }} />
-                </IconButton>
-
-                <IconButton
-                    onClick={showValiationModal}
-                >
-                    <RuleOutlinedIcon
-                        sx={{
-                            color: "black"
-                        }} />
-                </IconButton>
-            </Drawer>
-
-
+            {/* SideMenu Component */}
+            <SideMenu
+                onOpenUploadModal={openUploadFileModal}
+                onOpenValidationModal={openValidationModal}
+            />
 
             <Box
                 sx={{
@@ -164,14 +122,14 @@ const SBOLInsightPage = () => {
                     backgroundColor: 'white',
                 }}
             >
-                {/* Graph Visualization */}
+                {/* Graph View Component*/}
                 <GraphView
                     graphElements={graphElements}
                     graphError={graphError}
                     loading={loading}
                 />
 
-                {/* Validation results view */}
+                {/* Validation Message Component */}
                 <ValidationMessages
                     open={openVModal}
                     onClose={closeValidationModal}
