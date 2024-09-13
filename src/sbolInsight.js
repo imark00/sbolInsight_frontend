@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Drawer, Box, IconButton, Typography } from "@mui/material";
+import { Drawer, Box, IconButton } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
 import axios from "axios";
 import './App.css';
-import CytoscapeComponent from 'react-cytoscapejs';
 import { quantum } from 'ldrs'
 import FileUpload from './components/fileUpload';
 import ValidationMessages from './components/validation';
+import GraphView from './components/graph';
 
 
 const drawerWidth = "60px"
@@ -154,83 +154,22 @@ const SBOLInsightPage = () => {
                 </IconButton>
             </Drawer>
 
+
+
             <Box
                 sx={{
                     position: 'relative',
-                    width: "100vw", height: "100vh",
+                    width: "100vw",
+                    height: "100vh",
                     backgroundColor: 'white',
                 }}
             >
-                {graphElements
-                    ? <CytoscapeComponent
-                        elements={CytoscapeComponent.normalizeElements({
-                            nodes: graphElements.nodes,
-                            edges: graphElements.edges
-                        })}
-                        stylesheet={[
-                            {
-                                selector: 'node',
-                                style: {
-                                    label: 'data(name)',
-                                    width: "30px",
-                                    height: "30px",
-                                }
-                            },
-                            {
-                                selector: 'edge',
-                                style: {
-                                    label: 'data(label)',
-                                    width: 2,
-
-                                }
-                            }
-                        ]}
-                        style={{
-                            width: '100%',
-                            height: '100%'
-                        }}
-                        layout={{
-                            name: 'grid',
-                            fit: true
-                        }}
-                    />
-                    : <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '100%',
-                        }}
-                    >
-                        {graphError
-                            ? <Typography>
-                                Could not generate the graph
-                            </Typography>
-                            : loading
-                                ? <Box>
-                                    <l-quantum
-                                        size="220"
-                                        speed="2.2"
-                                        color="#36A108"
-                                    />
-                                </Box>
-                                : <Box>
-                                    <Typography
-                                        sx={{
-                                            fontSize: "70px",
-                                            letterSpacing: "0.04em",
-                                            fontWeight: "bold",
-                                            fontStyle: "oblique"
-                                        }}
-                                    >
-                                        Welcome to SBOLInsight
-                                    </Typography>
-                                </Box>
-                        }
-                    </Box>
-                }
-
+                {/* Graph Visualization */}
+                <GraphView
+                    graphElements={graphElements}
+                    graphError={graphError}
+                    loading={loading}
+                />
 
                 {/* Validation results view */}
                 <ValidationMessages
