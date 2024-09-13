@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Box, IconButton, Typography, Modal, Button, Divider } from "@mui/material";
+import { Drawer, Box, IconButton, Typography } from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
 import axios from "axios";
@@ -7,6 +7,7 @@ import './App.css';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { quantum } from 'ldrs'
 import FileUpload from './components/fileUpload';
+import ValidationMessages from './components/validation';
 
 
 const drawerWidth = "60px"
@@ -232,88 +233,11 @@ const SBOLInsightPage = () => {
 
 
                 {/* Validation results view */}
-                {openVModal
-                    ? <Box id="validationModal"
-                        sx={{
-                            width: "100%",
-                            height: "260px",
-                            backgroundColor: '#F8F8F8',
-                            position: 'absolute',
-                            bottom: 0,
-                            right: 0,
-                            border: '3px solid #CBD0DC',
-                            boxSizing: "border-box",
-                            padding: "10px 20px 20px 20px",
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                overflowY: 'auto',
-                                flex: 1,
-                            }}>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <Typography>
-                                    Validation Report
-                                </Typography>
-
-                                <Button
-                                    variant="text"
-                                    size="small"
-                                    color="error"
-                                    onClick={showValiationModal}
-                                    sx={{
-                                        letterSpacing: "0.04em"
-                                    }}
-                                >
-                                    Close
-                                </Button>
-                            </Box>
-
-                            {validationData
-                                ? <Box
-                                    sx={{
-                                        flex: 1,
-                                        overflowY: 'auto',
-                                    }}>
-                                    <div className="validationText">
-                                        {
-                                            validationData.status === "success"
-                                                ? <div>
-                                                    Total Statements: {validationData.totalStmts} <br /> <br />
-                                                    {validationData.stmts}
-                                                </div>
-                                                : validationData.error
-                                        }
-                                    </div>
-                                </Box>
-                                : <Box
-                                    sx={{
-                                        flex: 1,
-                                        flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                        textAlign: 'center',
-                                    }}>
-                                    <div className="validationText">
-                                        Nothing to show yet
-                                    </div>
-                                </Box>
-                            }
-
-                        </Box>
-                    </Box>
-                    : null
-                }
+                <ValidationMessages
+                    open={openVModal}
+                    onClose={closeValidationModal}
+                    validationData={validationData}
+                />
             </Box>
 
             {/* // Upload file modal */}
