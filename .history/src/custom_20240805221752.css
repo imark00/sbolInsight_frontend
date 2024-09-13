@@ -1,0 +1,17 @@
+.responsive-container {
+    background-color: #ffffff;  
+    height: 100%;
+    width: 100%; 
+    /* On screens smaller than 576px (small screens), set the width to 200px */
+    /* @media (max-width: 576px) {
+      width: 200px;
+    } */
+  }
+
+
+  .container {
+    background-color: #bd1c1c;
+    height: 100%;
+    width: 200px;
+ }
+  
